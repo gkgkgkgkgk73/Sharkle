@@ -1,7 +1,9 @@
 package com.example.sharkle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 * 1. 로그인 레이아웃에서 각 뷰들 만들기
 * 2. 버튼 눌렸을 때 액티비티 옮기는 것 구현
 * 3. 아이디 비밀번호 찾기
-*
+* 4. 어느 사이클에 들어가야하는지 고민해야함..
 */
 public class LoginActivity extends AppCompatActivity
 {
@@ -48,29 +50,54 @@ public class LoginActivity extends AppCompatActivity
         RetrofitClient retrofitClient = new RetrofitClient();
         RetrofitAPI retrofitAPI = retrofitClient.retrofitAPI;
 
-        //이메일, 비밀번호 받아서 로그인 요청 보내기
-        HashMap<String, String> input = new HashMap<>();
-        input.put("email",email.getText().toString());
-        input.put("password",password.getText().toString());
-        retrofitAPI.loginData(input).enqueue(new Callback<LoginToken>(){
+        //로그인 버튼 눌렸을 때 이메일 비번 있으면 로그인 요청 보내기
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call call, Response response) {
-                if(response.isSuccessful())
+            public void onClick(View v) {
+                if(email.length()!=0 && password.length()!=0)
                 {
-                    //로그인 성공시
+                    //이메일, 비번 모두 있을 때
 
-                    LoginToken loginToken = (LoginToken) response.body();
-                    //로그인 확인용
-                    Log.d("loginTestA", loginToken.getAccessToken().toString());
-                    Log.d("loginTestR",loginToken.getRefreshToken().toString());
+                    HashMap<String, String> input = new HashMap<>();
+                    input.put("email",email.getText().toString());
+                    input.put("password",password.getText().toString());
+                    retrofitAPI.loginData(input).enqueue(new Callback<LoginToken>(){
+                        @Override
+                        public void onResponse(Call call, Response response) {
+                            if(response.isSuccessful())
+                            {
+                                //로그인 성공시
+
+                                LoginToken loginToken = (LoginToken) response.body();
+                                //로그인 확인용
+                                Log.d("loginTestA", loginToken.getAccessToken().toString());
+                                Log.d("loginTestR",loginToken.getRefreshToken().toString());
+
+                                //이후 로그인 이후 액티비티 정해야함.
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call call, Throwable t)
+                        {
+                            //로그인 오류 시 어떻게 처리할 지
+
+                        }
+                    });
+                }
+                else
+                {
+                    //이메일 비번 둘 중 하나 없을 때
                 }
             }
+        });
 
+        //만약 회원가입 버튼 눌리면 SignUpActivity로 이동
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFailure(Call call, Throwable t)
-            {
-                //로그인 오류 시 어떻게 처리할 지
-
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }

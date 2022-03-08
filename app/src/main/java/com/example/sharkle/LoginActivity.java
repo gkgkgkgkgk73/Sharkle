@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 * 할일
 * 1. 로그인 레이아웃에서 각 뷰들 만들기
 * 2. 버튼 눌렸을 때 액티비티 옮기는 것 구현
+* 3. 아이디 비밀번호 찾기
 *
 */
 public class LoginActivity extends AppCompatActivity

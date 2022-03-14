@@ -26,6 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 * 2. 버튼 눌렸을 때 액티비티 옮기는 것 구현
 * 3. 아이디 비밀번호 찾기
 * 4. 어느 사이클에 들어가야하는지 고민해야함..
+* 5. accesstoken 만료시 refreshtoken 보내는 것도 구현.
 */
 public class LoginActivity extends AppCompatActivity
 {

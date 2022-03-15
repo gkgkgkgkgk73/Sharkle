@@ -1,5 +1,6 @@
 package com.example.sharkle;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity
 {
+    SharedPreferences sp;
     EditText email;
     EditText userId;
     EditText userName;
@@ -68,6 +70,14 @@ public class SignUpActivity extends AppCompatActivity
                                 //회원가입 확인용
                                 Log.d("signUpTestA", loginToken.getAccessToken().toString());
                                 Log.d("signUpTestR",loginToken.getRefreshToken().toString());
+
+                                //sp에 토큰 저장
+                                sp = getSharedPreferences("sp",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString("accessToken",loginToken.getAccessToken());
+                                editor.putString("refreshToken",loginToken.getRefreshToken());
+                                editor.commit();
+
                             }
                         }
 

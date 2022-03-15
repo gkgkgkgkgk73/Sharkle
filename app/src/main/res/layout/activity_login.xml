@@ -11,7 +11,7 @@
         android:id="@+id/box"
         android:layout_width="303dp"
         android:layout_height="203dp"
-        android:background="@color/white"
+        android:background="@drawable/linear_layout_round"
         android:orientation="vertical">
 
         <ImageView
@@ -24,12 +24,16 @@
 
         <EditText
             android:id="@+id/login_email"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
             android:layout_width="253dp"
             android:layout_height="34dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/edittext_rounded_corner_rectangle"
-            android:textStyle="normal" />
+            android:drawableStart="@drawable/ic_round_perm_identity"
+            android:drawablePadding="5dp"
+            android:paddingLeft="7dp"
+            android:textStyle="normal"
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/login_password"
@@ -37,8 +41,13 @@
             android:layout_marginTop="5dp"
             android:layout_width="253dp"
             android:layout_height="34dp"
+            android:drawableStart="@drawable/akar_icons_lock_on"
+            android:drawablePadding="5dp"
+            android:paddingLeft="8dp"
             android:background="@drawable/edittext_rounded_corner_rectangle"
-            android:textStyle="normal" />
+            android:drawableRight="@drawable/typcn_delete_outline"
+            android:textStyle="normal"
+            android:inputType="textPassword" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,8 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/img_login_button_bg"
-                    android:text="로그인"
-                    android:textStyle="normal" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -72,6 +80,7 @@
                     android:layout_marginBottom="1dp"
                     android:gravity="center"
                     android:text="로그인"
+                    android:textColor="@color/white"
                     android:textStyle="normal" />
             </RelativeLayout>
 
@@ -85,8 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="18dp"
                     android:src="@drawable/img_sign_up_button_bg"
-                    android:text="회원가입"
-                    android:textStyle="normal" />
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"

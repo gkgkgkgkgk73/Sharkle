@@ -1,10 +1,12 @@
 package com.example.sharkle;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,10 +33,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LoginActivity extends AppCompatActivity
 {
 
+    SharedPreferences sp;
     EditText email;
     EditText password;
-    TextView loginButton;
-    TextView signUpButton;
+    ImageView loginButton;
+    ImageView signUpButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -73,7 +76,12 @@ public class LoginActivity extends AppCompatActivity
                                 //로그인 확인용
                                 Log.d("loginTestA", loginToken.getAccessToken().toString());
                                 Log.d("loginTestR",loginToken.getRefreshToken().toString());
-
+                                //sp에 토큰 저장
+                                sp = getSharedPreferences("sp",MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sp.edit();
+                                editor.putString("accessToken",loginToken.getAccessToken());
+                                editor.putString("refreshToken",loginToken.getRefreshToken());
+                                editor.commit();
                                 //이후 로그인 이후 액티비티 정해야함.
                             }
                         }

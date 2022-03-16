@@ -58,21 +58,25 @@ public class LoginActivity extends AppCompatActivity
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("loginTry","wait..");
                 if(email.length()!=0 && password.length()!=0)
                 {
                     //이메일, 비번 모두 있을 때
 
+
                     HashMap<String, String> input = new HashMap<>();
+
                     input.put("email",email.getText().toString());
                     input.put("password",password.getText().toString());
+
                     retrofitAPI.loginData(input).enqueue(new Callback<LoginToken>(){
                         @Override
-                        public void onResponse(Call call, Response response) {
+                        public void onResponse(Call<LoginToken> call, Response<LoginToken> response) {
                             if(response.isSuccessful())
                             {
                                 //로그인 성공시
 
-                                LoginToken loginToken = (LoginToken) response.body();
+                                LoginToken loginToken = response.body();
                                 //로그인 확인용
                                 Log.d("loginTestA", loginToken.getAccessToken().toString());
                                 Log.d("loginTestR",loginToken.getRefreshToken().toString());
@@ -87,9 +91,10 @@ public class LoginActivity extends AppCompatActivity
                         }
 
                         @Override
-                        public void onFailure(Call call, Throwable t)
+                        public void onFailure(Call<LoginToken> call, Throwable t)
                         {
                             //로그인 오류 시 어떻게 처리할 지
+                          t.printStackTrace();
 
                         }
                     });

@@ -7,12 +7,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient
 {
-    private static final String BASE_URL = "http://sharkle-server.kro.kr";
+//    private static final String BASE_URL = "http://sharkle-server.kro.kr";
 
 
     //retrofit 초기화
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl("http://sharkle-server.kro.kr")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

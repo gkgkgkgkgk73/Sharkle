@@ -17,6 +17,13 @@ public class SignUp
     @SerializedName("username")
     private String userName;
 
+    public SignUp(String email, String userId, String password, String userName){
+        this.email = email;
+        this.userId = userId;
+        this.password = password;
+        this.userName = userName;
+    }
+
     public String getEmail()
     {
         return email;

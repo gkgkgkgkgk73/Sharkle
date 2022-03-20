@@ -53,23 +53,20 @@ public class SignUpActivity extends AppCompatActivity
                 if(email.length()!=0 && userId.length()!=0 && password.length()!=0 && userName.length() !=0)
                 {
                     //빈 정보 입력창 없을 때 가입 보내기
-                    HashMap<String, String> input = new HashMap<>();
-                    input.put("email",email.getText().toString());
-                    input.put("user_id",userId.getText().toString());
-                    input.put("password",password.getText().toString());
-                    input.put("username",userName.getText().toString());
+                   SignUp input = new SignUp(email.getText().toString(), userId.getText().toString(), password.getText().toString(), userName.getText().toString());
+                   Call<LoginToken> call = retrofitAPI.signUpData(input);
 
-                    retrofitAPI.signUpData(input).enqueue(new Callback<LoginToken>(){
+                    call.enqueue(new Callback<LoginToken>(){
                         @Override
-                        public void onResponse(Call call, Response response) {
+                        public void onResponse(Call<LoginToken> call, Response<LoginToken> response) {
                             if(response.isSuccessful())
                             {
                                 //회원가입&로그인 성공시
 
-                                LoginToken loginToken = (LoginToken) response.body();
+                                LoginToken loginToken = response.body();
                                 //회원가입 확인용
-                                Log.d("signUpTestA", loginToken.getAccessToken().toString());
-                                Log.d("signUpTestR",loginToken.getRefreshToken().toString());
+                                Log.d("signUpTestA", loginToken.getAccessToken());
+                                Log.d("signUpTestR",loginToken.getRefreshToken());
 
                                 //sp에 토큰 저장
                                 sp = getSharedPreferences("sp",MODE_PRIVATE);
@@ -85,6 +82,7 @@ public class SignUpActivity extends AppCompatActivity
                         public void onFailure(Call call, Throwable t)
                         {
                             //회원가입 오류 시 어떻게 처리할 지
+                            t.printStackTrace();
 
                         }
                     });

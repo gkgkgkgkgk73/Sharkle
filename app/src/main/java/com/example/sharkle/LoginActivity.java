@@ -58,34 +58,36 @@ public class LoginActivity extends AppCompatActivity
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("loginTry","wait..");
+
                 if(email.length()!=0 && password.length()!=0)
                 {
                     //이메일, 비번 모두 있을 때
 
+                    User input = new User(email.getText().toString(),password.getText().toString());
+                    Log.d("test","response");
+                    Call<LoginToken> call = retrofitAPI.loginData(input);
+                    Log.d("test","response");
 
-                    HashMap<String, String> input = new HashMap<>();
-
-                    input.put("email",email.getText().toString());
-                    input.put("password",password.getText().toString());
-
-                    retrofitAPI.loginData(input).enqueue(new Callback<LoginToken>(){
+                    call.enqueue(new Callback<LoginToken>(){
                         @Override
                         public void onResponse(Call<LoginToken> call, Response<LoginToken> response) {
                             if(response.isSuccessful())
                             {
+                                Log.d("test","response");
                                 //로그인 성공시
-
                                 LoginToken loginToken = response.body();
+
                                 //로그인 확인용
-                                Log.d("loginTestA", loginToken.getAccessToken().toString());
-                                Log.d("loginTestR",loginToken.getRefreshToken().toString());
+                                Log.d("loginTestA", loginToken.getAccessToken());
+                                Log.d("loginTestR",loginToken.getRefreshToken());
+
                                 //sp에 토큰 저장
                                 sp = getSharedPreferences("sp",MODE_PRIVATE);
                                 SharedPreferences.Editor editor = sp.edit();
                                 editor.putString("accessToken",loginToken.getAccessToken());
                                 editor.putString("refreshToken",loginToken.getRefreshToken());
                                 editor.commit();
+                                Log.d("test",sp.getString("accessToken","?"));
                                 //이후 로그인 이후 액티비티 정해야함.
                             }
                         }
@@ -93,6 +95,7 @@ public class LoginActivity extends AppCompatActivity
                         @Override
                         public void onFailure(Call<LoginToken> call, Throwable t)
                         {
+                            Log.d("login","fail");
                             //로그인 오류 시 어떻게 처리할 지
                           t.printStackTrace();
 

@@ -23,6 +23,8 @@ public class SignUpActivity extends AppCompatActivity
     EditText userName;
     EditText password;
     TextView signUpRequest;
+    RetrofitClient retrofitClient;
+    RetrofitAPI retrofitAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,8 +38,8 @@ public class SignUpActivity extends AppCompatActivity
         password = findViewById(R.id.sign_up_password);
 
         //retrofit 이용 위해 초기화
-        RetrofitClient retrofitClient = new RetrofitClient();
-        RetrofitAPI retrofitAPI = retrofitClient.retrofitAPI;
+        retrofitClient = RetrofitClient.getInstance();
+        retrofitAPI = RetrofitClient.getRetrofitInterface();
 
         // 만약 회원가입 확인 버튼 눌렀는데 정보 다 넣으면 회원가입 시도
 

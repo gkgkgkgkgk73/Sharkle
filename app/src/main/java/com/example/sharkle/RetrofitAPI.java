@@ -5,6 +5,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -17,13 +18,17 @@ import retrofit2.http.Query;
 public interface RetrofitAPI
 {
 
-    @POST("/auth/login/")
+    @POST("auth/login/")
     Call<LoginToken> loginData(@Body User user);
 
-    @POST("/auth/signup/")
+    @POST("auth/signup/")
     Call<LoginToken> signUpData(@Body SignUp signUp);
 
-    @POST("/auth/token/refresh/")
-    Call<String> refreshToken(@FieldMap String param);
+    @FormUrlEncoded
+    @POST("auth/token/refresh/")
+    Call<AccessToken> getRefreshToken(@Field("refresh") String token);
 
+    @FormUrlEncoded
+    @POST("auth/token/verify/")
+    Call<String> verifyToken(@Field("token") String token);
 }

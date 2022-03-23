@@ -38,6 +38,8 @@ public class LoginActivity extends AppCompatActivity
     EditText password;
     ImageView loginButton;
     ImageView signUpButton;
+    private RetrofitClient retrofitClient;
+    private RetrofitAPI retrofitAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,8 +53,8 @@ public class LoginActivity extends AppCompatActivity
         signUpButton = findViewById(R.id.sign_up_button);
 
         //retrofit 이용 위해 초기화
-        RetrofitClient retrofitClient = new RetrofitClient();
-        RetrofitAPI retrofitAPI = retrofitClient.retrofitAPI;
+        retrofitClient = RetrofitClient.getInstance();
+        retrofitAPI = RetrofitClient.getRetrofitInterface();
 
         //로그인 버튼 눌렸을 때 이메일 비번 있으면 로그인 요청 보내기
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +65,7 @@ public class LoginActivity extends AppCompatActivity
                 {
                     //이메일, 비번 모두 있을 때
 
-                    User input = new User(email.getText().toString(),password.getText().toString());
+                    User input = new User(email.getText().toString().trim(),password.getText().toString().trim());
                     Log.d("test","response");
                     Call<LoginToken> call = retrofitAPI.loginData(input);
                     Log.d("test","response");
